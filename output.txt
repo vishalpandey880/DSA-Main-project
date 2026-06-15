@@ -1,0 +1,296 @@
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+--- Save Current Configuration ---
+Enter current firewall rule: Enter access control policy: Enter security policy: 
+[SUCCESS] Current configuration saved successfully.
+Performance: Stack Push operation performed in O(1) time.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+--- Apply New Security Policy ---
+Enter new firewall rule: Enter new access control policy: Enter new security policy: 
+[SUCCESS] New security policy applied successfully.
+Performance: Configuration pushed into stack in O(1) time.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+========== Latest Active Configuration ==========
+Version:         2
+Firewall Rule:   allow tcp 80, 443, 8080
+Access Control:  allow admin_ip, developers_ip
+Security Policy: permit dev ssh
+Status:          New Policy Applied
+-------------------------------------------------
+Performance: Stack Peek operation performed in O(1) time.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+--- Detect Attack / Failure ---
+Enter detected threat/failure type (e.g., Ransomware, DDoS): 
+[WARNING] Attack or failure detected.
+[STATUS] System state: OFFLINE. Recovery engine activated.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+========== Security Recovery Dashboard ==========
+Incident Tracking Log:
+  Incident ID:     1
+  Threat Type:     DDoS attack from Botnet-A
+  Incident Status: Detected
+  Recovery Detail: Pending
+  -------------------------------------
+
+Recovery Monitoring Stats:
+  Successful Recoveries: 0
+  Failed Recoveries:     0
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+[SUCCESS] Automated Rollback Recovery Completed.
+Unsafe configuration removed:
+ - Removed Version: 2
+
+Previous secure configuration restored:
+ - Version: 1
+ - Firewall Rule: allow tcp 80, 443
+ - Access Control: allow admin_ip, deny all
+ - Security Policy: restrict root ssh
+
+Performance: Stack Pop operation performed in O(1) time.
+[STATUS] System state: ONLINE. Network services resumed.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+========== Security Recovery Dashboard ==========
+Incident Tracking Log:
+  Incident ID:     1
+  Threat Type:     DDoS attack from Botnet-A
+  Incident Status: Resolved
+  Recovery Detail: Automated Rollback Successful
+  -------------------------------------
+
+Recovery Monitoring Stats:
+  Successful Recoveries: 1
+  Failed Recoveries:     0
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+========== Security Analytics Module ==========
+Total Attacks Detected: 1
+Successful Recoveries:  1
+Failed Recoveries:      0
+Recovery Success Rate:  100.00%
+Attack Trend Analysis:  Low Attack Trend.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+========== Business Continuity System ==========
+Total Downtime:        5 minutes
+Service Availability:  AVAILABLE (Online)
+Recovery Impact:       Downtime minimized via automated rollback.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+========== Performance Analysis & Complexities ==========
+  Save Configuration     -> Stack Push -> Time Complexity: O(1) | Space Complexity: O(1)
+  Restore Configuration  -> Stack Pop  -> Time Complexity: O(1) | Space Complexity: O(1)
+  View Latest Version    -> Stack Peek -> Time Complexity: O(1) | Space Complexity: O(1)
+  Configuration History  -> Vector Scan -> Time Complexity: O(N) | Space Complexity: O(1)
+  Incident Scanning      -> Vector Scan -> Time Complexity: O(M) | Space Complexity: O(1)
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+========== System Workflow ==========
+  1. Current stable configuration is saved.
+  2. Configuration is pushed onto the backup LIFO Stack.
+  3. A new security policy/configuration is applied.
+  4. Threat/Failure is detected, driving system OFFLINE.
+  5. Automated rollback recovery engine is triggered.
+  6. Unsafe configuration is popped from the stack.
+  7. Previous secure configuration is restored.
+  8. Services resume ONLINE and system availability is restored.
+
+=======================================================
+       Cybersecurity Incident Recovery System (CIRS)    
+=======================================================
+  1. Save Current Configuration
+  2. Apply New Security Policy
+  3. Detect Attack / Failure
+  4. Automated Rollback Recovery
+  5. View Latest Configuration
+  6. View Configuration Version History
+  7. Security Recovery Dashboard
+  8. Security Analytics Module
+  9. Business Continuity System
+  10. Performance Analysis
+  11. Show System Workflow
+  12. Exit
+-------------------------------------------------------
+Enter your choice (1-12): 
+Exiting CyberSecurity Recovery System. Goodbye!

@@ -1,0 +1,19 @@
+1
+allow tcp 80, 443
+allow admin_ip, deny all
+restrict root ssh
+2
+allow tcp 80, 443, 8080
+allow admin_ip, developers_ip
+permit dev ssh
+5
+3
+DDoS attack from Botnet-A
+7
+4
+7
+8
+9
+10
+11
+12
