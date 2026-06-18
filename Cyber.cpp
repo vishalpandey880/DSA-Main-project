@@ -1,98 +1,58 @@
-/**
- * @file Cyber.cpp
- * @brief Cybersecurity Incident Recovery System (CIRS)
- * 
- * This system simulates a security configuration rollback and recovery tool.
- * It uses data structures like Stack (for last-in-first-out configuration rollbacks)
- * and Vectors (for chronological version history and incident tracking) to manage 
- * security backups, detect incidents, and restore services to a last-known-secure state.
- * 
- * Data Structures & Complexity:
- * - Stack (std::stack) for configuration rollbacks:
- *   - Push (Save config): O(1)
- *   - Pop (Rollback config): O(1)
- *   - Top (View latest config): O(1)
- * - Vectors (std::vector) for history and tracking:
- *   - Append (Save/Incident log): O(1) amortized
- *   - Traversal (History/Analytics): O(N) where N is the number of records
- */
-
+#include <iomanip>
 #include <iostream>
+#include <limits>
 #include <stack>
 #include <string>
 #include <vector>
-#include <limits>
-#include <iomanip>
 
 using namespace std;
 
-/**
- * @class Configuration
- * @brief Represents a system security configuration state.
- */
+
 class Configuration {
 public:
-  int version;             ///< Version identifier
-  string firewallRule;     ///< Active firewall configuration rules
-  string accessControl;    ///< Access control lists/policies
-  string securityPolicy;   ///< Overall security policy parameters
-  string status;           ///< State status (e.g., Secure Backup, New Policy Applied)
+  int version;
+  string firewallRule;
+  string accessControl;
+  string securityPolicy;
+  string status;
 
-  /**
-   * @brief Constructor for Configuration.
-   */
   Configuration(int v, string fw, string ac, string sp, string st)
-      : version(v), firewallRule(fw), accessControl(ac), securityPolicy(sp), status(st) {}
+      : version(v), firewallRule(fw), accessControl(ac), securityPolicy(sp),
+        status(st) {}
 };
 
-/**
- * @class Incident
- * @brief Represents a recorded cybersecurity incident/attack.
- */
 class Incident {
 public:
-  int id;                  ///< Auto-incremented incident ID
-  string threatType;       ///< Description of the threat (e.g., DDoS, SQL injection)
-  string status;           ///< Status of the incident (Detected, Resolved, Unresolved)
-  string recoveryStatus;   ///< Detail on how the incident was recovered (Pending, Rollback Successful, Failed)
+  int id;
+  string threatType;
+  string status;
+  string recoveryStatus;
 
-  /**
-   * @brief Constructor for Incident.
-   */
   Incident(int i, string t)
       : id(i), threatType(t), status("Detected"), recoveryStatus("Pending") {}
 };
 
-/**
- * @class CyberSecurityRecoverySystem
- * @brief Core system managing backups, rollbacks, incident tracking, and metrics.
- */
 class CyberSecurityRecoverySystem {
 private:
-  stack<Configuration> configStack;      ///< LIFO stack storing configurations for rollback
-  vector<Configuration> versionHistory;  ///< Chronological history of all configurations
-  vector<Incident> incidents;            ///< Vector tracking all security incidents
+  stack<Configuration> configStack;
+  vector<Configuration> versionHistory;
+  vector<Incident> incidents;
 
-  int versionNo = 1;                     ///< Version counter
-  int incidentNo = 1;                    ///< Incident counter
-  int totalAttacks = 0;                  ///< Total attacks detected
-  int successfulRecoveries = 0;          ///< Successful rollbacks
-  int failedRecoveries = 0;              ///< Failed rollbacks
-  int downtimeMinutes = 0;               ///< Accumulated system downtime
-  bool serviceAvailable = true;          ///< Flag representing current system availability
+  int versionNo = 1;
+  int incidentNo = 1;
+  int totalAttacks = 0;
+  int successfulRecoveries = 0;
+  int failedRecoveries = 0;
+  int downtimeMinutes = 0;
+  bool serviceAvailable = true;
 
 public:
-  /**
-   * @brief Saves the current configuration to the backup stack.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1) (for a single push)
-   */
   void saveCurrentConfiguration() {
     string fw, ac, sp;
 
     // Clear input buffer safely up to newline
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    
+
     cout << "\n--- Save Current Configuration ---\n";
     cout << "Enter current firewall rule: ";
     getline(cin, fw);
@@ -112,21 +72,17 @@ public:
     cout << "Performance: Stack Push operation performed in O(1) time.\n";
   }
 
-  /**
-   * @brief Applies a new configuration policy on top of the stack.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void applyNewSecurityPolicy() {
     if (configStack.empty()) {
-      cout << "\n[ERROR] First save current configuration before applying new policy.\n";
+      cout << "\n[ERROR] First save current configuration before applying new "
+              "policy.\n";
       return;
     }
 
     string fw, ac, sp;
 
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    
+
     cout << "\n--- Apply New Security Policy ---\n";
     cout << "Enter new firewall rule: ";
     getline(cin, fw);
@@ -146,16 +102,11 @@ public:
     cout << "Performance: Configuration pushed into stack in O(1) time.\n";
   }
 
-  /**
-   * @brief Registers an attack or system failure. Sets system offline.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void detectAttackOrFailure() {
     string threat;
 
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    
+
     cout << "\n--- Detect Attack / Failure ---\n";
     cout << "Enter detected threat/failure type (e.g., Ransomware, DDoS): ";
     getline(cin, threat);
@@ -165,20 +116,16 @@ public:
 
     totalAttacks++;
     serviceAvailable = false;
-    downtimeMinutes += 5; // Accumulate downtime per incident
+    downtimeMinutes += 5;
 
     cout << "\n[WARNING] Attack or failure detected.";
     cout << "\n[STATUS] System state: OFFLINE. Recovery engine activated.\n";
   }
 
-  /**
-   * @brief Rolls back the latest (unsafe) configuration to the previous secure state.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void automatedRollback() {
     if (configStack.size() < 2) {
-      cout << "\n[ERROR] Rollback failed. Previous secure configuration not available.\n";
+      cout << "\n[ERROR] Rollback failed. Previous secure configuration not "
+              "available.\n";
       failedRecoveries++;
 
       if (!incidents.empty()) {
@@ -217,11 +164,6 @@ public:
     cout << "[STATUS] System state: ONLINE. Network services resumed.\n";
   }
 
-  /**
-   * @brief Peeks at the active configuration top of stack.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void viewLatestConfiguration() {
     if (configStack.empty()) {
       cout << "\n[INFO] No active configuration available.\n";
@@ -240,11 +182,6 @@ public:
     cout << "Performance: Stack Peek operation performed in O(1) time.\n";
   }
 
-  /**
-   * @brief Iterates and prints all version history.
-   * Time Complexity: O(N) where N is number of versions in history
-   * Space Complexity: O(1)
-   */
   void showVersionHistory() {
     cout << "\n========== Configuration Backup History ==========\n";
 
@@ -262,12 +199,6 @@ public:
       cout << "-------------------------------------------------\n";
     }
   }
-
-  /**
-   * @brief Lists incidents and operational recovery status.
-   * Time Complexity: O(M) where M is the number of incidents
-   * Space Complexity: O(1)
-   */
   void securityRecoveryDashboard() {
     cout << "\n========== Security Recovery Dashboard ==========\n";
 
@@ -289,11 +220,6 @@ public:
     cout << "  Failed Recoveries:     " << failedRecoveries << "\n";
   }
 
-  /**
-   * @brief Performs statistical analysis on security recovery rates and attack trends.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void securityAnalyticsModule() {
     cout << "\n========== Security Analytics Module ==========\n";
 
@@ -305,7 +231,8 @@ public:
       cout << "Recovery Success Rate:  0.00%\n";
     } else {
       double rate = (double)successfulRecoveries / totalAttacks * 100;
-      cout << "Recovery Success Rate:  " << fixed << setprecision(2) << rate << "%\n";
+      cout << "Recovery Success Rate:  " << fixed << setprecision(2) << rate
+           << "%\n";
     }
 
     cout << "Attack Trend Analysis:  ";
@@ -320,43 +247,36 @@ public:
     }
   }
 
-  /**
-   * @brief Shows service availability and downtime.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void businessContinuitySystem() {
     cout << "\n========== Business Continuity System ==========\n";
 
     cout << "Total Downtime:        " << downtimeMinutes << " minutes\n";
-    cout << "Service Availability:  " << (serviceAvailable ? "AVAILABLE (Online)" : "UNAVAILABLE (Offline)") << "\n";
+    cout << "Service Availability:  "
+         << (serviceAvailable ? "AVAILABLE (Online)" : "UNAVAILABLE (Offline)")
+         << "\n";
 
     if (successfulRecoveries > 0) {
-      cout << "Recovery Impact:       Downtime minimized via automated rollback.\n";
+      cout << "Recovery Impact:       Downtime minimized via automated "
+              "rollback.\n";
     } else {
       cout << "Recovery Impact:       No successful rollbacks recorded yet.\n";
     }
   }
 
-  /**
-   * @brief Outputs complexity information for submission requirements.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void performanceAnalysis() {
     cout << "\n========== Performance Analysis & Complexities ==========\n";
-    cout << "  Save Configuration     -> Stack Push -> Time Complexity: O(1) | Space Complexity: O(1)\n";
-    cout << "  Restore Configuration  -> Stack Pop  -> Time Complexity: O(1) | Space Complexity: O(1)\n";
-    cout << "  View Latest Version    -> Stack Peek -> Time Complexity: O(1) | Space Complexity: O(1)\n";
-    cout << "  Configuration History  -> Vector Scan -> Time Complexity: O(N) | Space Complexity: O(1)\n";
-    cout << "  Incident Scanning      -> Vector Scan -> Time Complexity: O(M) | Space Complexity: O(1)\n";
+    cout << "  Save Configuration     -> Stack Push -> Time Complexity: O(1) | "
+            "Space Complexity: O(1)\n";
+    cout << "  Restore Configuration  -> Stack Pop  -> Time Complexity: O(1) | "
+            "Space Complexity: O(1)\n";
+    cout << "  View Latest Version    -> Stack Peek -> Time Complexity: O(1) | "
+            "Space Complexity: O(1)\n";
+    cout << "  Configuration History  -> Vector Scan -> Time Complexity: O(N) "
+            "| Space Complexity: O(1)\n";
+    cout << "  Incident Scanning      -> Vector Scan -> Time Complexity: O(M) "
+            "| Space Complexity: O(1)\n";
   }
 
-  /**
-   * @brief Displays System Workflow.
-   * Time Complexity: O(1)
-   * Space Complexity: O(1)
-   */
   void showWorkflow() {
     cout << "\n========== System Workflow ==========\n";
     cout << "  1. Current stable configuration is saved.\n";
@@ -366,13 +286,11 @@ public:
     cout << "  5. Automated rollback recovery engine is triggered.\n";
     cout << "  6. Unsafe configuration is popped from the stack.\n";
     cout << "  7. Previous secure configuration is restored.\n";
-    cout << "  8. Services resume ONLINE and system availability is restored.\n";
+    cout
+        << "  8. Services resume ONLINE and system availability is restored.\n";
   }
 };
 
-/**
- * @brief Main execution function containing the menu loop.
- */
 int main() {
   CyberSecurityRecoverySystem system;
   int choice;
@@ -395,11 +313,11 @@ int main() {
     cout << "  12. Exit\n";
     cout << "-------------------------------------------------------\n";
     cout << "Enter your choice (1-12): ";
-    
+
     // Read user choice and handle invalid integer inputs
     if (!(cin >> choice)) {
-      cout << "\n[ERROR] Invalid input. Please enter a number between 1 and 12.\n";
-      cin.clear(); // Clear error flags
+      cout << "\n[ERROR] Invalid input.\n";
+      cin.clear();                                         // Clear error flags
       cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear buffer
       choice = 0; // Reset choice to keep loop running
       continue;
@@ -451,11 +369,12 @@ int main() {
       break;
 
     case 12:
-      cout << "\nExiting CyberSecurity Recovery System. Goodbye!\n";
+      cout << "\nExiting CyberSecurity Recovery System.\n";
       break;
 
     default:
-      cout << "\n[ERROR] Choice out of range. Please choose a number between 1 and 12.\n";
+      cout << "\n[ERROR] Choice out of range. Please choose a number between 1 "
+              "and 12.\n";
     }
 
   } while (choice != 12);
