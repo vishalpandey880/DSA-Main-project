@@ -1,13 +1,12 @@
 #include <iomanip>   
-#include <iostream>  
-#include <limits>    
-#include <stack>     
-#include <string>  
+#include <iostream> 
+#include <limits>  
+#include <stack>    
+#include <string>   
 #include <vector>    
-
 using namespace std;
 
-// Stores configuration details of the system
+// Class to store configuration details
 class Configuration {
 public:
   int version;
@@ -16,13 +15,13 @@ public:
   string securityPolicy;
   string status;
 
-  // Constructor to initialize configuration
+  // Constructor
   Configuration(int v, string fw, string ac, string sp, string st)
       : version(v), firewallRule(fw), accessControl(ac),
         securityPolicy(sp), status(st) {}
 };
 
-// Stores information about detected security incidents
+// Class to store attack/incident information
 class Incident {
 public:
   int id;
@@ -30,7 +29,7 @@ public:
   string status;
   string recoveryStatus;
 
-  // Constructor initializes incident details
+  // Constructor
   Incident(int i, string t)
       : id(i), threatType(t),
         status("Detected"),
@@ -40,16 +39,16 @@ public:
 class CyberSecurityRecoverySystem {
 private:
 
-  // Stack used for backup and rollback mechanism (LIFO)
+  // Stack stores configuration backups (LIFO)
   stack<Configuration> configStack;
 
-  // Stores all configuration versions
+  // Stores all versions of configurations
   vector<Configuration> versionHistory;
 
-  // Stores all incidents
+  // Stores all detected incidents
   vector<Incident> incidents;
 
-  // System statistics
+  // Counters and analytics variables
   int versionNo = 1;
   int incidentNo = 1;
   int totalAttacks = 0;
@@ -57,197 +56,235 @@ private:
   int failedRecoveries = 0;
   int downtimeMinutes = 0;
 
-  // Boolean variable for service availability
+  // Boolean variable for service status
   bool serviceAvailable = true;
 
 public:
 
-  // Save current secure configuration into stack
+  // Save current configuration into stack
   void saveCurrentConfiguration() {
 
-    // Remove unwanted input buffer characters
+    string fw, ac, sp;
+
+    // Clear input buffer
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    // Create backup configuration
-    Configuration config(versionNo++, fw, ac, sp, "Secure Backup");
+    cout << "\n--- Save Current Configuration ---\n";
 
-    // Push into stack for rollback support
+    // Take configuration details from user
+    cout << "Enter current firewall rule: ";
+    getline(cin, fw);
+
+    cout << "Enter access control policy: ";
+    getline(cin, ac);
+
+    cout << "Enter security policy: ";
+    getline(cin, sp);
+
+    // Create configuration object
+    Configuration config(versionNo++, fw, ac, sp,
+                         "Secure Backup");
+
+    // Push configuration into stack
     configStack.push(config);
 
-    // Store history in vector
+    // Store in history
     versionHistory.push_back(config);
+
+    cout << "\n[SUCCESS] Configuration saved.\n";
   }
 
-  // Apply a new security policy
+  // Apply new security policy
   void applyNewSecurityPolicy() {
 
-    // Check whether backup exists
+    // Check if backup exists
     if (configStack.empty()) {
-      cout << "Save current configuration first.\n";
+      cout << "\n[ERROR] Save configuration first.\n";
       return;
     }
+
+    string fw, ac, sp;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "\n--- Apply New Security Policy ---\n";
+
+    getline(cin, fw);
+    getline(cin, ac);
+    getline(cin, sp);
 
     // Create new configuration
     Configuration newConfig(versionNo++, fw, ac, sp,
                             "New Policy Applied");
 
-    // Push new configuration into stack
+    // Push into stack
     configStack.push(newConfig);
 
     // Save into history
     versionHistory.push_back(newConfig);
+
+    cout << "\n[SUCCESS] Policy applied.\n";
   }
 
-  // Detect cyber attack or system failure
+  // Detect attack or system failure
   void detectAttackOrFailure() {
 
-    // Create new incident record
+    string threat;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "\n--- Detect Attack ---\n";
+
+    getline(cin, threat);
+
+    // Create new incident
     Incident incident(incidentNo++, threat);
 
     incidents.push_back(incident);
 
-    // Update statistics
     totalAttacks++;
 
-    // System goes offline
+    // System becomes offline
     serviceAvailable = false;
 
     // Increase downtime
     downtimeMinutes += 5;
+
+    cout << "\n[WARNING] Attack detected.\n";
   }
 
   // Rollback to previous secure configuration
   void automatedRollback() {
 
-    // Need at least two configurations
+    // Need at least 2 versions
     if (configStack.size() < 2) {
 
-      // Recovery failed
       failedRecoveries++;
+
+      if (!incidents.empty()) {
+        incidents.back().status = "Unresolved";
+        incidents.back().recoveryStatus = "Failed";
+      }
+
+      cout << "\n[ERROR] Rollback failed.\n";
       return;
     }
 
-    // Remove unsafe configuration
+    // Remove latest unsafe configuration
+    Configuration unsafeConfig = configStack.top();
     configStack.pop();
 
-    // Restore previous secure configuration
-    Configuration restoredConfig = configStack.top();
+    // Restore previous secure version
+    Configuration restoredConfig =
+        configStack.top();
 
-    // Recovery successful
     successfulRecoveries++;
 
-    // Bring system online
+    // Service becomes online again
     serviceAvailable = true;
+
+    if (!incidents.empty()) {
+      incidents.back().status = "Resolved";
+      incidents.back().recoveryStatus =
+          "Rollback Successful";
+    }
+
+    cout << "\n[SUCCESS] Rollback completed.\n";
   }
 
-  // View latest active configuration
+  // View current active configuration
   void viewLatestConfiguration() {
 
-    // Peek operation on stack
+    if (configStack.empty()) {
+      cout << "\nNo configuration available.\n";
+      return;
+    }
+
+    // Peek operation
     Configuration latest = configStack.top();
+
+    cout << "Version: "
+         << latest.version << endl;
   }
 
-  // Display all configuration versions
+  // Show all saved versions
   void showVersionHistory() {
 
-    // Traverse vector and display all versions
     for (const auto &config : versionHistory) {
-      // Print details
+
+      cout << "Version: "
+           << config.version << endl;
     }
   }
 
-  // Show incident and recovery information
+  // Show incident and recovery details
   void securityRecoveryDashboard() {
 
-    // Display all recorded incidents
+    cout << "\n===== Dashboard =====\n";
+
     for (const auto &incident : incidents) {
-      // Print incident details
+
+      cout << "Threat: "
+           << incident.threatType << endl;
+
+      cout << "Status: "
+           << incident.status << endl;
     }
   }
 
-  // Security analytics calculations
+  // Analytics module
   void securityAnalyticsModule() {
 
-    // Calculate recovery success percentage
-    double rate =
-      (double)successfulRecoveries / totalAttacks * 100;
+    cout << "Total Attacks: "
+         << totalAttacks << endl;
+
+    cout << "Successful Recoveries: "
+         << successfulRecoveries << endl;
+
+    // Calculate recovery percentage
+    if (totalAttacks > 0) {
+
+      double rate =
+          (double)successfulRecoveries /
+          totalAttacks * 100;
+
+      cout << "Recovery Rate: "
+           << fixed << setprecision(2)
+           << rate << "%" << endl;
+    }
   }
 
-  // Display business continuity information
+  // Business continuity report
   void businessContinuitySystem() {
 
-    // Check service availability using Boolean
-    if (serviceAvailable) {
-      cout << "Online";
-    } else {
-      cout << "Offline";
-    }
+    cout << "Downtime: "
+         << downtimeMinutes
+         << " minutes\n";
+
+    // Ternary operator
+    cout << "Service Status: "
+         << (serviceAvailable
+             ? "ONLINE"
+             : "OFFLINE")
+         << endl;
   }
 
-  // Display time and space complexities
+  // Complexity analysis
   void performanceAnalysis() {
-    // O(1) -> Push, Pop, Peek
-    // O(N) -> Version History Scan
-    // O(M) -> Incident Scan
+
+    cout << "Push  -> O(1)\n";
+    cout << "Pop   -> O(1)\n";
+    cout << "Peek  -> O(1)\n";
+    cout << "Vector Scan -> O(N)\n";
   }
 
-  // Show complete system workflow
+  // Show project workflow
   void showWorkflow() {
-    // Save Configuration
-    // Apply New Policy
-    // Detect Attack
-    // Rollback
-    // Restore Service
+
+    cout << "1. Save Configuration\n";
+    cout << "2. Apply Policy\n";
+    cout << "3. Detect Attack\n";
+    cout << "4. Rollback\n";
+    cout << "5. Restore System\n";
   }
 };
-
-int main() {
-
-  // Create Cyber Security Recovery System object
-  CyberSecurityRecoverySystem system;
-
-  int choice;
-
-  do {
-
-    // Display menu
-
-    // Read user choice safely
-    if (!(cin >> choice)) {
-
-      // Handle invalid input
-      cin.clear();
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      continue;
-    }
-
-    // Execute selected operation
-    switch (choice) {
-
-      case 1:
-        system.saveCurrentConfiguration();
-        break;
-
-      case 2:
-        system.applyNewSecurityPolicy();
-        break;
-
-      case 3:
-        system.detectAttackOrFailure();
-        break;
-
-      case 4:
-        system.automatedRollback();
-        break;
-
-      // Other menu options...
-
-      case 12:
-        cout << "Exiting Program";
-        break;
-    }
-
-  } while (choice != 12);
-
-  return 0;
-}
